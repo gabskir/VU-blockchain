@@ -7,6 +7,8 @@
 #include <string>
 #include <fstream>
 #include <string>
+#include <bitset>
+#include <cmath>
 
 using std::cin;
 using std::cout;
@@ -14,7 +16,60 @@ using std::endl;
 using std::vector;
 using std::string;
 
-void readFile(){    
+#define INT_BITS 64
+
+unsigned long long int leftRotate (unsigned long long int n, unsigned long long int d) {
+    return (n << d) | (n >> (INT_BITS - d));
+}
+
+unsigned long long int rightRotate (unsigned long long int n, unsigned long long int d) {
+    return (n >> d) | (n << (INT_BITS - d));
+}
+
+unsigned long long int hashinimas(string input) {
+
+    int lastIndex = input.length() - 1;
+    unsigned long long int sum = 0;
+
+    for (int i = 0; i < input.length(); i++) {  
+
+        char curChar = input.at(i);
+
+        cout << "nepakeistas" << endl << (std::bitset<64>) curChar << endl;
+        std::bitset<64> altChar = rightRotate(curChar, curChar * 73939);
+        cout << "alt" << endl << altChar << endl;
+
+        std::bitset<64> xorBuddy = input.at(lastIndex);
+        cout << "su kuo" << endl << xorBuddy << endl;
+
+        cout << "indeksai: " << i << " " << lastIndex << endl;
+
+        std::bitset<64> xorResult = altChar ^ xorBuddy;
+        cout << "rezultatas" << endl << xorResult.to_ullong() << endl;
+
+        std::bitset<64> diff = xorResult.to_ullong() - 1672 * pow(876, i);
+        cout << "rezultatas2" << endl << diff.to_ullong() << endl;
+
+        sum += leftRotate(diff.to_ullong(), 8191);
+
+        if (i + 1 < input.length()/2) {    
+            lastIndex--;
+        }
+        else if (i + 1 > input.length()/2) {
+            lastIndex++;
+        }
+        else {
+            lastIndex = 0;
+        }
+
+    }
+
+    cout << "Suma " << endl << sum << endl;
+    return sum;
+
+}
+
+string readFile(){    
     string dirPath = "./";
     vector<string> files;
     for (const auto& entry : std::filesystem::directory_iterator(dirPath)) {
@@ -55,7 +110,8 @@ void readFile(){
             string eil;
             getline(in, eil);
             in.close();
-            break;
+            //break;
+            return eil;
         }
     }catch (const char* error) {
         cout << error << "Try opening other file: " << endl;
@@ -95,13 +151,14 @@ int main() {
     }
 
     if (choice == 1) {
-        readFile();
+        hashinimas(readFile());
     }
     else {
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         string input;
         cout << "Type your text: ";
-        getline (cin, input);
+        getline(cin, input);
+        hashinimas(input);
 
     }
 }
