@@ -83,3 +83,21 @@ Hash value of string "labas":
 6cca107a4c714b01b4607ae049a6426a10f19e9ac65ff4ada3c757793bf43b68
 ```
 This test also proves that input can be a character string of any length (different length file texts were also taken to prove this statement), but output will always be a fixed-length hex string (64 characters long). 
+
+#### Efficiency test:
+![Line graph](https://github.com/gabskir/VU-blockchain/blob/v0.1/line-graph.png?raw=true)
+
+| Line Count | 1   | 2   | 4   | 8   | 16  | 32  | 64  | 128 | 256 | 512 |
+|-------------|------|------|------|------|------|------|------|------|------|------|
+| Time (ms)  |0.015|0.029|0.035|0.050|0.117|0.217|0.581|0.867|1.735|2.865|
+<br>
+After the following testing: hash one line from the file konstitucija.txt and measure the time it took (repeat this experiment by hashing 2 lines, 4 lines, 8 lines, etc. (16,32, 64, ...)), we can observe that the algorithm is quite efficient and hashes quickly. However, to describe the results more accurately, we would need to hash a much larger file and observe patterns. <br>
+
+#### Collision resistance test:
+To perform this test, 100 000 string pairs were generated (25 000 - ten characters long, 25 000 - one hundred characters long, 25 000 - five hundred characters long and 25 000 - one thousand characters long) and it was checked whether in all cases the resulting pairs hashes do not match. 
+
+| String Length | 10      | 100     | 500     | 1000    |
+|---------------|---------|---------|---------|---------|
+| Collision     | 0       | 0       | 0       | 0       |
+
+No collisions were found and therefore we can partially verify that the generated hash function is collision resistant. However, testing for true collision resistance requires much more sophisticated and time-consuming testing.
