@@ -101,3 +101,30 @@ To perform this test, 100 000 string pairs were generated (25 000 - ten characte
 | Collision     | 0       | 0       | 0       | 0       |
 
 No collisions were found and therefore we can partially verify that the generated hash function is collision resistant. However, testing for true collision resistance requires much more sophisticated and time-consuming testing.
+
+#### Avalanche effect test:
+To perform this test, 100 000 string pairs were generated (25 000 - ten characters long, 25 000 - one hundred characters long, 25 000 - five hundred characters long and 25 000 - one thousand characters long).
+The strings in the pair differed from each other only by the first character. The percentage difference between the hashes in the pair was evaluated both at bit and hex level. The average was derived by running this test five times.
+
+| String Length | Min Hex Difference | Max Hex Difference | Avg Hex Difference | Min Bit Difference | Max Bit Difference | Avg Bit Difference |
+|---------------|--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
+| 10            | 73.4375            | 100                | 91.8847            | 35.5469            | 63.6719            | 48.9169            |
+| 100           | 79.6875            | 100                | 93.1845            | 36.3281            | 62.1094            | 49.5338            |
+| 500           | 75                 | 100                | 92.0805            | 34.375             | 60.9375            | 48.9964            |
+| 1000          | 75                 | 100                | 92.4707            | 34.375             | 61.3281            | 49.1384            |
+
+Taking into account the average percentage difference (which exceeds 90%), we can conclude that the created function does indeed represent the avalanche effect well.
+
+### Conclusions
+After evaluating the test results, we can identify the strengths and weaknesses of the developed algorithm. <br>
+<br>
+*Upsides*
+- regardless of input length, the output is always 64 characters hex
+- the same input always produces the same output
+- the developed algorithm provides an excellent representation of the avalanche effect <br>
+<br>
+
+*Downsides*
+- from performed tests we cannot clearly see how often collisions occur
+- we can observe that hashing a large file would take a long time
+
