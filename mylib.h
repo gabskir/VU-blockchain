@@ -19,6 +19,9 @@
 #include <chrono>
 #include <random>
 #include <iomanip>
+#include <unordered_set>
+#include <cstring>
+
 
 using std::cin;
 using std::cout;

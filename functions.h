@@ -23,15 +23,17 @@ unsigned long long int rightRotate (unsigned long long int n, unsigned long long
 unsigned long long int hashing(const string& input);
 void fillBits(std::bitset<256> &bits, unsigned long long int seed);
 string getHashString(const string& input);
-int getFileChoice(int numFiles);
 string readFile(const string &fileName);
 string generateString(int length);
 void generateFile(int length);
-void collisionTest ();
+void collisionTest();
 void konstitucijosTest();
 void avalancheTest();
 std::bitset<256> hexStringToBitset(const string& hexStr);
-
+std::pair<string, string> hashWithSalt(const string& input, bool writeToFile);
+string generateSalt();
+void puzzleFriendlinessTest();
+void sha256VSmyHash();
 
 
 #endif
