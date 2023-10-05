@@ -160,5 +160,7 @@ After 1000000 attempts, no input was found to produce the target hash.
 ### SHA256 and myHash speed comparison
 The function **sha256VSmyHash** compares the performance of a custom hash function (getHashString) against the SHA-256 cryptographic hash function over varying data lengths. For each specified data length, it repeatedly hashes randomly generated data strings and calculates the average execution time for both hash functions. The results, including the average execution times and data lengths, are then printed to the console. <br>
 ![Comparison line graph](https://github.com/gabskir/VU-blockchain/blob/v0.2/Comparison.png?raw=true) <br>
-From the line graph we can see that sha256 performs hashing approximately 6-7 times faster than myHash. 
+From the line graph we can see that sha256 performs hashing approximately 6-7 times faster than myHash.<br>
+<br>
+SHA256 function for c++: [SHA256 source](http://www.zedwood.com/article/cpp-sha256-function)
 
