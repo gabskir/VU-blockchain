@@ -128,3 +128,37 @@ After evaluating the test results, we can identify the strengths and weaknesses 
 - from performed tests we cannot clearly see how often collisions occur
 - we can observe that hashing a large file would take a long time
 
+## Additional tasks
+### Salt generator 
+A function **generteSalt()** is used to generate a 16-byte (128-bit) random salt. This is achieved using the Mersenne Twister random number engine and a uniform distribution that spans all possible byte values (0-255). Each of the 16 bytes is converted into its 2-character hexadecimal representation, resulting in a 32-character long hexadecimal string. The generated salt is then checked against a set of previously produced salts. If this particular salt has already been created, the function will regenerate a new salt. This loop continues until a unique salt is obtained. Once a unique salt is produced, it's added to the saltSet to keep track for future uniqueness checks. <br>
+Then in the function **hashWithSalt** unique salt (that was generated in the previous function) is appended to the input. Combination of input and salt is then hashed using created hash generator. <br>
+
+Simple tests to check hiding and puzzle-friendliness properties were created. <br>
+#### Hiding
+For each predefined string length (10, 100, 500, 1000), the function generates 25,000 pairs of identical strings. Each of these strings is passed through the **hashWithSalt()** function.
+The function then checks for two things:
+- If the hashes of the two strings are identical.
+- If the salted hashes of the two strings are identical. <br>
+
+The number of collisions for both cases is tracked for each string length. <br>
+By generating pairs of identical strings and assessing collisions, the function allows us to see how adding salt can affect the hash outputs (even though the strings are identical, the salted hash should differ due to the random salt). The fewer collisions found with salt, the more evidence we have of the hiding property in play, especially with the use of salt.
+
+| String Length | 10      | 100     | 500     | 1000    |
+|---------------|---------|---------|---------|---------|
+| Collision of hash    | 0       | 0       | 0       | 0       |
+| Collision of salt    | 0       | 0       | 0       | 0       |
+
+#### Puzzle - Friendliness
+The purpose of this exercise is to test the difficulty of finding an input that hashes to a predetermined output (the targetHash). This difficulty should be non-trivial but not infeasible, in order to confirm puzzle friendliness. However, this simple test function has limitations: it uses a static target hash, meaning it's only testing for one specific output. <br>
+Nevertheless, with this simple test we can see that after generating 1000000 random inputs and salts, the match for target hash was not found.
+
+```
+After 1000000 attempts, no input was found to produce the target hash.
+```
+--- 
+
+### SHA256 and myHash speed comparison
+The function **sha256VSmyHash** compares the performance of a custom hash function (getHashString) against the SHA-256 cryptographic hash function over varying data lengths. For each specified data length, it repeatedly hashes randomly generated data strings and calculates the average execution time for both hash functions. The results, including the average execution times and data lengths, are then printed to the console. <br>
+![Comparison line graph](https://github.com/gabskir/VU-blockchain/blob/v0.2/Comparison.png?raw=true) <br>
+From the line graph we can see that sha256 performs hashing approximately 6-7 times faster than myHash. 
+
